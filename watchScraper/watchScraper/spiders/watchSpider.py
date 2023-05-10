@@ -21,6 +21,7 @@ class Spider(scrapy.Spider):
 
         load = response.css('div.pagination-LoadMorePrevBlock.pagination-LoadMorePrevBlock-next')
         next_page_number = int(load.css('#pagination-LoadMore::attr(data-next-page)').get())
-        if next_page_number:
+        while next_page_number:
             next_page_url = f'https://www.goldsmiths.co.uk/c/Watches/Mens-Watches?page={next_page_number}'
             yield scrapy.Request(next_page_url, callback=self.parse)
+            next_page_number = int(load.css('#pagination-LoadMore::attr(data-next-page)').get())
