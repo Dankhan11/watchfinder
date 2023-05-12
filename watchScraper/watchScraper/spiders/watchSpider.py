@@ -7,16 +7,30 @@ class Spider(scrapy.Spider):
     def parse(self, response):
         for product in response.css('div.productTile'):
             try:
+                name = product.css('div.productTileName::text').get()
+                price = product.css('div.productTilePrice::text').get().replace('£', '')
+                link = product.css('a').attrib['href']
+                
+                # Perform data cleaning
+                name = name.strip()  # Remove leading/trailing whitespaces
+                price = price.replace(',', '')  # Remove comma from price
+                
                 yield {
-                    'name': product.css('div.productTileName::text').get(),
-                    'price': product.css('div.productTilePrice::text').get().replace('£', ''),
-                    'link': product.css('a').attrib['href'],
+                    'name': name,
+                    'price': price,
+                    'link': link,
                 }
             except:
+                name = product.css('div.productTileName::text').get()
+                link = product.css('a').attrib['href']
+                
+                # Perform data cleaning
+                name = name.strip()  # Remove leading/trailing whitespaces
+                
                 yield {
-                    'name': product.css('div.productTileName::text').get(),
+                    'name': name,
                     'price': 'SOLD OUT',
-                    'link': product.css('a').attrib['href'],
+                    'link': link,
                 }
 
         query_params = response.url.split('?')[-1]  # Extract query parameters
@@ -24,3 +38,5 @@ class Spider(scrapy.Spider):
         if next_page_number:
             next_page_url = f'https://www.goldsmiths.co.uk/c/Watches/Mens-Watches?{query_params}&page={next_page_number}'
             yield scrapy.Request(next_page_url, callback=self.parse)
+
+#add the valuation of the watch relative with the value  the watch has with box + card = watchfinder = good website 
