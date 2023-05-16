@@ -1,29 +1,9 @@
-# watchfinder
+## Watchfinder
 WatchFinder
 This is a Python script that uses the Scrapy library to scrape watch data from the Goldsmiths website. It retrieves information about men's watches, including their names, prices, and links.
 
 Installation
-To run this script, you need to have Python and Scrapy installed on your machine. Follow these steps to set up the project:
-
-Clone the repository:
-shell
-Copy code
-git clone <repository_url>
-Navigate to the project directory:
-shell
-Copy code
-cd watch-finder
-Install the required dependencies using pip:
-shell
-Copy code
-pip install scrapy
-Usage
-To start the scraping process, run the following command:
-
-shell
-Copy code
-scrapy runspider spider.py
-The script will start scraping the Goldsmiths website and retrieve watch data. The scraped data will be displayed in the console.
+To run this script, you need to have Python and Scrapy installed on your machine.
 
 Script Overview
 The script defines a Spider class that extends the scrapy.Spider class. Here's an overview of the script's structure and functionality:
